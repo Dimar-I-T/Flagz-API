@@ -60,6 +60,7 @@ app.get('/home', verifyUs, async (req, res) => {
         const u_id = req.user;
         const user = await User.findById(u_id.id);
         
+        res.send("this is home");
         return res.json(user);
     }catch(err){
         return res.json({success: false, message: err.message});
