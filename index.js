@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors({
-    origin: [`http://localhost:${process.env.portfe}`],
+    origin: [`https://flagz-seven.vercel.app`],
     methods: ["GET", "POST"],
     credentials: true
 }));
