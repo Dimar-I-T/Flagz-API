@@ -63,6 +63,7 @@ app.get('/home', verifyUs, async (req, res) => {
         res.send("this is home");
         return res.json(user);
     }catch(err){
+        res.send("this is home");
         return res.json({success: false, message: err.message});
     }
 })
