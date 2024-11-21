@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors({
-    origin: [`https://flagz-seven.vercel.app`],
+    origin: ["https://flagz-seven.vercel.app"],
     methods: ["GET", "POST"],
     credentials: true
 }));
@@ -135,7 +135,11 @@ app.post('/login', async (req, res) => {
             const bisa = await bcrypt.compare(valPass, user.password);
             if (bisa){
                 const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: "1d"});
-                res.cookie("token", token);
+                res.cookie("token", token, {
+                    httpOnly: true,        
+                    secure: true,         
+                    sameSite: "none"       
+                })
                 res.status(201).json({success: true, message: "Successfully logged in!"});
             }else{
                 res.status(201).json({success: false, message: "Incorrect password!"});
@@ -166,4 +170,4 @@ app.post('/register', async (req, res) => {
     }
 });
 
-app.listen(process.env.port);
+app.listen(5000);
