@@ -27,12 +27,7 @@ const verifyUs = (req, res, next) => {
         req.user = decoded;
         next();
     }else{
-        try{
-            const user = User.find();
-        }catch(err){
-            res.json({message: err.message, Mess: "tidak ada"});
-        }
-       
+        res.json("skibidi");
     }
 }
 
@@ -178,3 +173,5 @@ app.post('/register', async (req, res) => {
 });
 
 app.listen(5000);
+
+module.exports = app;
