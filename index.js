@@ -27,7 +27,12 @@ const verifyUs = (req, res, next) => {
         req.user = decoded;
         next();
     }else{
-        return res.json(User.find());
+        const user = User.find();
+        if (user){
+            return res.json(user);
+        }else{
+            return res.json("tidak ada user");
+        }
     }
 }
 
