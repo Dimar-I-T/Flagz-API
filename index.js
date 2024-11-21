@@ -27,7 +27,7 @@ const verifyUs = (req, res, next) => {
         req.user = decoded;
         next();
     }else{
-        return res.json("No token");
+        return res.json("skibidi");
     }
 }
 
