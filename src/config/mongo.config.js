@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 exports.connectDB = async function() {
-    const URI = "mongodb://localhost:27017/";
+    const URI = process.env.mongodb_connect;
     const connectionParams = {};
 
     mongoose.set("strictQuery", false);

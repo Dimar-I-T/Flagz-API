@@ -9,7 +9,6 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const f = require('./src/f');
 
-require("dotenv").config();
 require("./src/config/mongo.config").connectDB();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -27,7 +26,7 @@ const verifyUs = (req, res, next) => {
         req.user = decoded;
         next();
     }else{
-        res.json("skibidi");
+        return res.json("No token");
     }
 }
 
@@ -60,10 +59,8 @@ app.get('/home', verifyUs, async (req, res) => {
         const u_id = req.user;
         const user = await User.findById(u_id.id);
         
-        res.send("this is home");
         return res.json(user);
     }catch(err){
-        res.send("this is home");
         return res.json({success: false, message: err.message});
     }
 })
@@ -138,10 +135,12 @@ app.post('/login', async (req, res) => {
             if (bisa){
                 const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: "1d"});
                 res.cookie("token", token, {
-                    httpOnly: true,        
-                    secure: true,         
-                    sameSite: "none"       
-                })
+                    httpOnly: true,
+                    secure: true, 
+                    sameSite: "none"
+                });
+
+                console.log(token);
                 res.status(201).json({success: true, message: "Successfully logged in!"});
             }else{
                 res.status(201).json({success: false, message: "Incorrect password!"});
@@ -173,5 +172,3 @@ app.post('/register', async (req, res) => {
 });
 
 app.listen(5000);
-
-module.exports = app;
